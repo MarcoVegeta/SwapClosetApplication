@@ -1,0 +1,87 @@
+<ion-content class="ion-padding">
+  <div class="confirmacion-wrapper">
+    <div class="check-halo">
+      <div class="check-circle">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </div>
+    </div>
+
+    <h1>{{ tituloConfirmacion }}</h1>
+
+    <p class="subtitulo" *ngIf="tipo === 'intercambio'">
+      Hemos enviado tu propuesta a <strong>{{ usuario }}</strong> por
+      <strong>{{ prenda }}</strong>. Te avisaremos en cuanto te responda.
+    </p>
+
+    <p class="subtitulo" *ngIf="tipo === 'prestamo'">
+      Hemos avisado a <strong>{{ usuario }}</strong> de que quieres tomar
+      prestada <strong>{{ prenda }}</strong>
+      <span *ngIf="dias"> durante <strong>{{ dias }} día(s)</strong></span>.
+    </p>
+
+    <p class="subtitulo" *ngIf="tipo === 'publicacion'">
+      Tu prenda <strong>{{ prenda }}</strong> ya forma parte de tu armario y es
+      visible para toda la comunidad de SwapCloset.
+    </p>
+
+    <div class="resumen-card">
+      <div class="resumen-fila">
+        <span class="fila-label">Operación</span>
+        <span class="fila-valor badge-tipo">
+          <ion-icon [name]="iconoTipo"></ion-icon>
+          {{ etiquetaTipo }}
+        </span>
+      </div>
+
+      <div class="resumen-fila">
+        <span class="fila-label">Prenda</span>
+        <span class="fila-valor">{{ prenda }}</span>
+      </div>
+
+      <div class="resumen-fila" *ngIf="tipo !== 'publicacion'">
+        <span class="fila-label">Destinatario</span>
+        <span class="fila-valor">{{ usuario }}</span>
+      </div>
+
+      <div class="resumen-fila" *ngIf="tipo === 'prestamo' && dias">
+        <span class="fila-label">Duración</span>
+        <span class="fila-valor">{{ dias }} día(s)</span>
+      </div>
+
+      <div class="resumen-fila">
+        <span class="fila-label">Estado</span>
+        <span class="estado-pill">
+          {{ tipo === 'publicacion' ? 'Publicada' : 'Pendiente de respuesta' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="acciones-col">
+      <button
+        *ngIf="tipo !== 'publicacion'"
+        type="button"
+        class="btn-primario"
+        routerLink="/tabs/chats">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        Ir a mis chats
+      </button>
+
+      <button
+        *ngIf="tipo === 'publicacion'"
+        type="button"
+        class="btn-primario"
+        routerLink="/tabs/perfil">
+        <ion-icon name="shirt-outline"></ion-icon>
+        Ver en mi armario
+      </button>
+
+      <button
+        type="button"
+        class="btn-secundario"
+        routerLink="/tabs/inicio">
+        <ion-icon name="home-outline"></ion-icon>
+        Volver al inicio
+      </button>
+    </div>
+  </div>
+</ion-content>

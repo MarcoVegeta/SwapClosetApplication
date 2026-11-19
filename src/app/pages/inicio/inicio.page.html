@@ -1,0 +1,38 @@
+<ion-content class="ion-padding">
+  <div class="header-saludo">
+    <h1>Hola, {{ swapService.usuarioActual.nombre }}</h1>
+    <p>Descubre prendas, intercambia, comparte</p>
+  </div>
+
+  <ion-item lines="none" class="sc-input-box">
+    <ion-icon name="search-outline" slot="start" color="medium"></ion-icon>
+    <ion-input
+      placeholder="Buscar prendas..."
+      [(ngModel)]="busqueda"
+      clearInput="true">
+    </ion-input>
+  </ion-item>
+
+  <h2 class="seccion-titulo">Prendas cerca de ti</h2>
+
+  <div class="prendas-grid">
+    <div
+      class="prenda-card"
+      *ngFor="let prenda of prendasCerca"
+      [routerLink]="['/tabs/prenda', prenda.id]">
+      <div class="img-wrapper">
+        <img [src]="prenda.imagen" [alt]="prenda.titulo" />
+      </div>
+      <div class="card-info">
+        <h4>{{ prenda.titulo }}</h4>
+        <p>Talla {{ prenda.talla }} · {{ prenda.estado }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ver-mas-container">
+    <ion-button fill="clear" routerLink="/tabs/explorar" class="btn-ver-mas">
+      Ver más
+    </ion-button>
+  </div>
+</ion-content>

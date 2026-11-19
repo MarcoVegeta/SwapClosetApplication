@@ -1,0 +1,125 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Estilos globales SwapCloset */
+ion-content {
+  --background: #ffffff;
+}
+
+ion-toolbar {
+  --background: #ffffff;
+  --border-width: 0;
+}
+
+ion-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #1a1a1a;
+}
+
+/* Buscador e inputs redondeados */
+.sc-input-box {
+  background: #f3f4f6;
+  border-radius: 14px;
+  padding: 4px 14px;
+  margin-bottom: 14px;
+  --background: #f3f4f6;
+  --padding-start: 0;
+}
+
+/* Grid de 2 columnas para prendas */
+.prendas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.prenda-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  .img-wrapper {
+    background: #f7f7f9;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .card-info {
+    padding: 10px;
+
+    h4 {
+      margin: 0 0 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #1a1a1a;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.72rem;
+      color: #757575;
+    }
+  }
+}
+
+/* Botones principales */
+.btn-morado {
+  --background: #6c5ce7;
+  --color: #ffffff;
+  --border-radius: 14px;
+  --box-shadow: none;
+  font-weight: 600;
+  text-transform: none;
+  height: 48px;
+}
+
+.btn-morado-suave {
+  --background: #efeafe;
+  --color: #6c5ce7;
+  --border-radius: 14px;
+  --box-shadow: none;
+  font-weight: 600;
+  text-transform: none;
+  height: 48px;
+}
+
+/* Chips de estilo y filtros */
+.sc-chip {
+  background: #f3f4f6;
+  color: #4b5563;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+  margin-right: 8px;
+  cursor: pointer;
+
+  &.activo {
+    background: #6c5ce7;
+    color: #ffffff;
+  }
+}

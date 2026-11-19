@@ -1,0 +1,111 @@
+@if (!enviado) {
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/inicio" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Solicitar préstamo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <section class="bloque">
+      <span class="etiqueta-seccion">Prenda que pides prestada</span>
+
+      <div class="prenda-objetivo">
+        <img [src]="prendaSolicitada.imagen" [alt]="prendaSolicitada.titulo" />
+        <div class="objetivo-info">
+          <h3>{{ prendaSolicitada.titulo }}</h3>
+          <p>Talla {{ prendaSolicitada.talla }} · {{ prendaSolicitada.estado }}</p>
+          <span class="propietario-tag">De {{ prendaSolicitada.propietario }}</span>
+        </div>
+        <div class="loan-badge">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>¿Cuánto tiempo la necesitas?</h2>
+
+      <div class="duracion-grid">
+        @for (duracion of opcionesDuracion; track duracion) {
+          <button
+            type="button"
+            class="duracion-chip"
+            [class.activa]="duracionSeleccionada === duracion"
+            (click)="seleccionarDuracion(duracion)">
+            {{ duracion }}
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>Fecha de inicio del préstamo</h2>
+
+      <div class="fecha-box">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <input
+          type="date"
+          class="campo-fecha"
+          [(ngModel)]="fechaInicio" />
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>Motivo o mensaje para {{ prendaSolicitada.propietario }} (opcional)</h2>
+      <textarea
+        rows="3"
+        class="campo-mensaje"
+        placeholder="¡Hola! La necesito para un evento este fin de semana, te la devuelvo impecable."
+        [(ngModel)]="mensaje">
+      </textarea>
+    </section>
+
+    <section class="bloque">
+      <label class="compromiso-card">
+        <input
+          type="checkbox"
+          [(ngModel)]="aceptaCondiciones" />
+        <div class="compromiso-texto">
+          <div class="compromiso-titulo">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+            <span>Compromiso de cuidado</span>
+          </div>
+          <p>Me comprometo a cuidar la prenda y devolverla limpia y en el mismo estado en el plazo acordado.</p>
+        </div>
+      </label>
+    </section>
+  </ion-content>
+
+  <ion-footer class="ion-no-border">
+    <div class="footer-acciones">
+      <button
+        type="button"
+        class="btn-confirmar"
+        [disabled]="!duracionSeleccionada || !fechaInicio || !aceptaCondiciones"
+        (click)="enviarSolicitud()">
+        Enviar solicitud de préstamo
+      </button>
+    </div>
+  </ion-footer>
+} @else {
+  <ion-content class="ion-padding">
+    <div class="confirmacion-screen">
+      <div class="check-circulo">
+        <ion-icon name="checkmark"></ion-icon>
+      </div>
+
+      <h1>PRESTAMO SOLICITADO</h1>
+      <p>La solicitud de préstamo se ha enviado correctamente</p>
+
+      <button
+        type="button"
+        class="btn-aceptar"
+        (click)="aceptar()">
+        ACEPTAR
+      </button>
+    </div>
+  </ion-content>
+}

@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="volver()" aria-label="Volver">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="usuario-header">
+    <img [src]="perfil.avatar" [alt]="perfil.nombre" class="avatar" />
+
+    <div class="usuario-info">
+      <h1>{{ perfil.nombre }}</h1>
+      <p class="ciudad">{{ perfil.ciudad }}</p>
+      <div class="stats">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ perfil.valoracion }}</span>
+        <span>·</span>
+        <span>{{ perfil.intercambios }} intercambios</span>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn-chat"
+      aria-label="Enviar mensaje"
+      (click)="abrirChat()">
+      <ion-icon name="chatbubble-outline"></ion-icon>
+    </button>
+  </div>
+
+  <section class="seccion">
+    <h2>Sus prendas</h2>
+
+    <div class="prendas-grid">
+      @for (prenda of perfil.prendas; track prenda.id) {
+        <div class="prenda-card" (click)="verPrenda(prenda.id)">
+          <div class="img-box">
+            <img [src]="prenda.imagen" [alt]="prenda.titulo" />
+          </div>
+          <div class="card-texto">
+            <h3>{{ prenda.titulo }}</h3>
+            <p>Talla {{ prenda.talla }} · {{ prenda.estado }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="seccion">
+    <h2>Estilo y tallas</h2>
+    <div class="estilos-row">
+      @for (estilo of perfil.estilos; track estilo) {
+        <span class="chip-estilo">{{ estilo }}</span>
+      }
+    </div>
+
+    <div class="tallas-row">
+      <span class="tallas-titulo">Tallas:</span>
+      @for (talla of perfil.tallas; track talla) {
+        <span class="chip-talla">{{ talla }}</span>
+      }
+    </div>
+  </section>
+</ion-content>

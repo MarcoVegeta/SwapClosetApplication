@@ -1,0 +1,78 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/inicio" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de la prenda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (prenda) {
+    <div class="imagen-box">
+      <img [src]="prenda.imagen" [alt]="prenda.titulo" />
+    </div>
+
+    <div class="info-prenda">
+      <h1>{{ prenda.titulo }}</h1>
+      <p class="meta">Talla {{ prenda.talla }} · {{ prenda.estado }}</p>
+      <p class="descripcion">{{ prenda.descripcion }}</p>
+    </div>
+
+    <div class="acciones">
+      <button
+        type="button"
+        class="btn-intercambio"
+        (click)="solicitarIntercambio()">
+        Solicitar intercambio
+      </button>
+
+      <button
+        type="button"
+        class="btn-prestamo"
+        (click)="solicitarPrestamo()">
+        Solicitar préstamo
+      </button>
+    </div>
+
+    <div class="propietario-bloque">
+      <p class="propietario-titulo">Publicado por {{ prenda.propietario }}</p>
+
+      <div class="propietario-card">
+        <img
+          [src]="prenda.avatarPropietario"
+          [alt]="prenda.propietario"
+          class="avatar" />
+
+        <div class="propietario-datos">
+          <div class="fila-superior">
+            <strong>{{ prenda.propietario }}</strong>
+            <span class="valoracion">
+              <ion-icon name="star"></ion-icon>
+              {{ prenda.valoracion }} · {{ prenda.intercambios }} intercambios
+            </span>
+          </div>
+          <p class="disponibilidad">
+            {{ prenda.ciudad }} - Disponible para intercambios
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="btn-chat"
+          aria-label="Chatear con propietario"
+          (click)="abrirChat()">
+          <ion-icon name="chatbubble-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  }
+
+  <ion-toast
+    [isOpen]="toastAbierto"
+    [message]="toastMensaje"
+    [duration]="1400"
+    position="bottom"
+    (didDismiss)="toastAbierto = false">
+  </ion-toast>
+</ion-content>

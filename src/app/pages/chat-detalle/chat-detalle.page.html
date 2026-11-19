@@ -1,0 +1,99 @@
+<ion-header class="ion-no-border">
+  @if (contacto) {
+    <ion-toolbar>
+      <button
+        type="button"
+        slot="start"
+        class="btn-back"
+        (click)="volver()"
+        aria-label="Volver">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+
+      <div
+        class="contacto-header"
+        (click)="verPerfilContacto()">
+        <div class="avatar-box">
+          <img [src]="contacto.avatar" [alt]="contacto.nombre" />
+          @if (contacto.online) {
+            <span class="online-dot"></span>
+          }
+        </div>
+        <div class="contacto-texto">
+          <h4>{{ contacto.nombre }}</h4>
+          <span>
+            {{ contacto.online ? 'En línea' : contacto.ciudad }}
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        slot="end"
+        class="btn-perfil-chat"
+        (click)="verPerfilContacto()"
+        aria-label="Ver perfil">
+        <ion-icon name="person-outline"></ion-icon>
+      </button>
+    </ion-toolbar>
+  }
+</ion-header>
+
+<ion-content class="ion-padding chat-fondo">
+  <div class="fecha-separador">
+    <span>Hoy</span>
+  </div>
+
+  <div class="mensajes-lista">
+    @for (msg of mensajes; track msg.id) {
+      <div
+        class="mensaje-fila"
+        [class.mio]="msg.esMio"
+        [class.suyo]="!msg.esMio">
+        <div class="burbuja">
+          <p>{{ msg.texto }}</p>
+          <div class="burbuja-meta">
+            <span>{{ msg.hora }}</span>
+            @if (msg.esMio) {
+              <ion-icon
+                name="checkmark-done-outline"
+                class="check-icon">
+              </ion-icon>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="rapidas-scroll">
+    @for (sug of respuestasRapidas; track sug) {
+      <button
+        type="button"
+        class="rapida-chip"
+        (click)="usarRespuestaRapida(sug)">
+        {{ sug }}
+      </button>
+    }
+  </div>
+
+  <div class="input-bar">
+    <input
+      type="text"
+      class="campo-texto"
+      placeholder="Escribe un mensaje..."
+      [(ngModel)]="nuevoMensaje"
+      (keyup.enter)="enviarMensaje()" />
+
+    <button
+      type="button"
+      class="btn-enviar"
+      [disabled]="!nuevoMensaje.trim()"
+      (click)="enviarMensaje()"
+      aria-label="Enviar mensaje">
+      <ion-icon name="send"></ion-icon>
+    </button>
+  </div>
+</ion-footer>

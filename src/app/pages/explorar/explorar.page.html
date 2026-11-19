@@ -1,0 +1,76 @@
+<ion-content class="ion-padding">
+  <div class="header-explorar">
+    <h1>Explorar</h1>
+    <p>Encuentra tu próximo intercambio</p>
+  </div>
+
+  <ion-item lines="none" class="sc-input-box">
+    <ion-icon name="search-outline" slot="start" color="medium"></ion-icon>
+    <ion-input
+      placeholder="Buscar camiseta, marca, estilo..."
+      [(ngModel)]="busqueda"
+      clearInput="true">
+    </ion-input>
+  </ion-item>
+
+  <div class="filtros-bloque">
+    <span class="filtro-label">Categoría</span>
+    <div class="chips-scroll">
+      <button
+        type="button"
+        class="chip-btn"
+        *ngFor="let cat of categorias"
+        [class.activo]="categoriaSeleccionada === cat"
+        (click)="seleccionarCategoria(cat)">
+        {{ cat }}
+      </button>
+    </div>
+  </div>
+
+  <div class="filtros-bloque">
+    <span class="filtro-label">Talla</span>
+    <div class="chips-scroll">
+      <button
+        type="button"
+        class="chip-btn chip-talla"
+        *ngFor="let talla of tallas"
+        [class.activo]="tallaSeleccionada === talla"
+        (click)="seleccionarTalla(talla)">
+        {{ talla }}
+      </button>
+    </div>
+  </div>
+
+  <div class="resultados-header">
+    <span>{{ prendasFiltradas.length }} prendas disponibles</span>
+    <button
+      type="button"
+      class="btn-reset"
+      *ngIf="busqueda || categoriaSeleccionada !== 'Todas' || tallaSeleccionada !== 'Todas'"
+      (click)="limpiarFiltros()">
+      Limpiar filtros
+    </button>
+  </div>
+
+  <div class="prendas-grid" *ngIf="prendasFiltradas.length > 0">
+    <div
+      class="prenda-card"
+      *ngFor="let prenda of prendasFiltradas"
+      [routerLink]="['/tabs/prenda', prenda.id]">
+      <div class="img-wrapper">
+        <img [src]="prenda.imagen" [alt]="prenda.titulo" />
+      </div>
+      <div class="card-info">
+        <h4>{{ prenda.titulo }}</h4>
+        <p>Talla {{ prenda.talla }} · {{ prenda.estado }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="estado-vacio" *ngIf="prendasFiltradas.length === 0">
+    <p>No hay prendas que coincidan con tu búsqueda.</p>
+    <button type="button" class="btn-limpiar-vacio" (click)="limpiarFiltros()">
+      Ver todas las prendas
+    </button>
+  </div>
+</ion-content>

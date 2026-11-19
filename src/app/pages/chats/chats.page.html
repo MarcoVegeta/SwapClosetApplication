@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Mensajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item lines="none" class="sc-input-box">
+    <ion-icon name="search-outline" slot="start" color="medium"></ion-icon>
+    <ion-input
+      placeholder="Buscar conversación o usuario..."
+      [(ngModel)]="busqueda"
+      clearInput="true">
+    </ion-input>
+  </ion-item>
+
+  <div class="filtros-chat">
+    <button
+      type="button"
+      class="filtro-pill"
+      [class.activo]="filtroActivo === 'todos'"
+      (click)="filtroActivo = 'todos'">
+      Todos
+    </button>
+    <button
+      type="button"
+      class="filtro-pill"
+      [class.activo]="filtroActivo === 'no-leidos'"
+      (click)="filtroActivo = 'no-leidos'">
+      No leídos
+      <span class="pill-count" *ngIf="totalNoLeidos > 0">
+        {{ totalNoLeidos }}
+      </span>
+    </button>
+  </div>
+
+  <div class="chats-lista" *ngIf="chatsFiltrados.length > 0; else sinChats">
+    <div
+      class="chat-row"
+      *ngFor="let chat of chatsFiltrados"
+      (click)="abrirChat(chat)">
+      <!-- Avatar + indicador online -->
+      <div class="avatar-wrapper">
+        <img [src]="chat.avatar" [alt]="chat.nombre" />
+        <span class="online-dot" *ngIf="estaOnline(chat.userId)"></span>
+      </div>
+
+      <div class="chat-body">
+        <div class="chat-top">
+          <h4>{{ chat.nombre }}</h4>
+          <span class="chat-hora" [class.destacada]="chat.noLeidos > 0">
+            {{ chat.hora }}
+          </span>
+        </div>
+
+        <div class="chat-bottom">
+          <p [class.no-leido]="chat.noLeidos > 0">
+            <ion-icon
+              *ngIf="chat.leido && chat.noLeidos === 0"
+              name="checkmark-done-outline"
+              class="check-leido">
+            </ion-icon>
+            {{ chat.ultimoMensaje }}
+          </p>
+
+          <span class="badge-unread" *ngIf="chat.noLeidos > 0">
+            {{ chat.noLeidos }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #sinChats>
+    <div class="empty-chats">
+      <div class="empty-icon">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      </div>
+      <h4>Sin conversaciones</h4>
+      <p>No hay mensajes que coincidan con tu filtro.</p>
+    </div>
+  </ng-template>
+</ion-content>

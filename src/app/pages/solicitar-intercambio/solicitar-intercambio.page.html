@@ -1,0 +1,95 @@
+@if (!enviado) {
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs/inicio" text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Solicitar intercambio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <section class="bloque">
+      <span class="etiqueta-seccion">Prenda que solicitas</span>
+
+      <div class="prenda-objetivo">
+        <img [src]="prendaSolicitada.imagen" [alt]="prendaSolicitada.titulo" />
+        <div class="objetivo-info">
+          <h3>{{ prendaSolicitada.titulo }}</h3>
+          <p>Talla {{ prendaSolicitada.talla }} · {{ prendaSolicitada.estado }}</p>
+          <span class="propietario-tag">De {{ prendaSolicitada.propietario }}</span>
+        </div>
+        <div class="swap-badge">
+          <ion-icon name="swap-horizontal-outline"></ion-icon>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <div class="cabecera-armario">
+        <h2>Elige una prenda de tu armario</h2>
+        <span>Selecciona 1</span>
+      </div>
+
+      <div class="armario-grid">
+        @for (item of misPrendas; track item.id) {
+          <div
+            class="mi-prenda-card"
+            [class.seleccionada]="prendaSeleccionadaId === item.id"
+            (click)="seleccionarPrenda(item.id)">
+            <div class="img-box">
+              <img [src]="item.imagen" [alt]="item.titulo" />
+              @if (prendaSeleccionadaId === item.id) {
+                <ion-icon name="checkmark-circle" class="check-seleccion"></ion-icon>
+              }
+            </div>
+            <div class="card-info">
+              <h4>{{ item.titulo }}</h4>
+              <p>Talla {{ item.talla }} · {{ item.estado }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>Mensaje para {{ prendaSolicitada.propietario }} (opcional)</h2>
+      <textarea
+        rows="3"
+        class="campo-mensaje"
+        placeholder="¡Hola! Me encanta tu prenda, ¿te interesa cambiarla por esta?"
+        [(ngModel)]="mensaje">
+      </textarea>
+    </section>
+  </ion-content>
+
+  <ion-footer class="ion-no-border">
+    <div class="footer-acciones">
+      <button
+        type="button"
+        class="btn-confirmar"
+        [disabled]="!prendaSeleccionadaId"
+        (click)="enviarSolicitud()">
+        Enviar propuesta de intercambio
+      </button>
+    </div>
+  </ion-footer>
+} @else {
+  <ion-content class="ion-padding">
+    <div class="confirmacion-screen">
+      <div class="check-circulo">
+        <ion-icon name="checkmark"></ion-icon>
+      </div>
+
+      <h1>INTERCAMBIO REALIZADO</h1>
+      <p>La solicitud de intercambio se ha enviado correctamente</p>
+
+      <button
+        type="button"
+        class="btn-aceptar"
+        (click)="aceptar()">
+        ACEPTAR
+      </button>
+    </div>
+  </ion-content>
+}

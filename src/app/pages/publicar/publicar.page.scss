@@ -1,0 +1,172 @@
+ion-toolbar {
+  --background: #ffffff;
+  --color: #1a1a1a;
+
+  ion-title {
+    font-weight: 800;
+    font-size: 1.25rem;
+  }
+}
+
+.seccion-bloque {
+  margin-bottom: 20px;
+
+  .label-seccion {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 9px;
+  }
+}
+
+.header-foto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .btn-muestra {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #ede9fe;
+    color: #6c5ce7;
+    border: none;
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 9px;
+    cursor: pointer;
+  }
+}
+
+.upload-box {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  border: 2px dashed #d8b4fe;
+  background: #faf8ff;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  .upload-icon-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ede9fe;
+    color: #6c5ce7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+    padding-inline: 16px;
+  }
+
+  .preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .btn-quitar-foto {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ef4444;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+.input-box {
+  background: #f5f6fa;
+  border-radius: 14px;
+  padding: 4px 14px;
+
+  ion-input,
+  ion-textarea {
+    --color: #1a1a1a;
+    --placeholder-color: #9ca3af;
+    font-size: 0.92rem;
+  }
+}
+
+.chips-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip-opcion {
+  border: none;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: #f3f4f6;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.18s ease;
+
+  &.chip-talla {
+    min-width: 46px;
+    text-align: center;
+  }
+
+  &.activo {
+    background: #6c5ce7;
+    color: #ffffff;
+  }
+}
+
+.footer-submit {
+  padding: 12px 16px 18px;
+  background: #ffffff;
+  border-top: 1px solid #f1f2f6;
+
+  .btn-publicar {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-radius: 14px;
+    background: #6c5ce7;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+    }
+  }
+}

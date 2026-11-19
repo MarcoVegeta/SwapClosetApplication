@@ -1,0 +1,83 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/perfil" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="avatar-section">
+    <button type="button" class="avatar-circle" (click)="cambiarFoto()">
+      <ion-icon name="pencil"></ion-icon>
+    </button>
+    <button type="button" class="btn-cambiar-foto" (click)="cambiarFoto()">
+      Cambiar foto
+    </button>
+  </div>
+
+  <div class="campo-grupo">
+    <label for="nombreInput">Nombre</label>
+    <input
+      id="nombreInput"
+      type="text"
+      [(ngModel)]="nombre"
+      placeholder="Mariana" />
+  </div>
+
+  <div class="campo-grupo">
+    <label for="ubicacionInput">Ubicación</label>
+    <input
+      id="ubicacionInput"
+      type="text"
+      [(ngModel)]="ubicacion"
+      placeholder="Madrid" />
+  </div>
+
+  <div class="campo-grupo">
+    <label>Mi estilo</label>
+    <div class="chips-row">
+      @for (estilo of opcionesEstilos; track estilo) {
+        <button
+          type="button"
+          class="chip-item"
+          [class.activo]="estilosSeleccionados.includes(estilo)"
+          (click)="toggleEstilo(estilo)">
+          {{ estilo }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="campo-grupo">
+    <label>Mis tallas</label>
+    <div class="chips-row">
+      @for (talla of opcionesTallas; track talla) {
+        <button
+          type="button"
+          class="chip-item talla"
+          [class.activo]="tallasSeleccionadas.includes(talla)"
+          (click)="toggleTalla(talla)">
+          {{ talla }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn-guardar"
+    [disabled]="!nombre.trim() || !ubicacion.trim()"
+    (click)="guardarCambios()">
+    Guardar cambios
+  </button>
+
+  <ion-toast
+    [isOpen]="toastAbierto"
+    [message]="toastMensaje"
+    [duration]="1400"
+    position="bottom"
+    (didDismiss)="toastAbierto = false">
+  </ion-toast>
+</ion-content>

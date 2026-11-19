@@ -1,0 +1,130 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Publicar prenda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Selector de foto -->
+  <div class="seccion-bloque">
+    <div class="header-foto">
+      <span class="label-seccion">Foto de la prenda</span>
+      <button
+        type="button"
+        class="btn-muestra"
+        *ngIf="!imagenPreview"
+        (click)="usarFotoMuestra()">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        Usar foto de prueba
+      </button>
+    </div>
+
+    <div class="upload-box" (click)="fileInput.click()">
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        hidden
+        (change)="onFileSelected($event)" />
+
+      <ng-container *ngIf="!imagenPreview; else vistaPrevia">
+        <div class="upload-icon-circle">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div>
+        <h4>Añadir fotografía</h4>
+        <p>Toca para subir una imagen desde tu galería</p>
+      </ng-container>
+
+      <ng-template #vistaPrevia>
+        <img [src]="imagenPreview" alt="Vista previa" class="preview-img" />
+        <button
+          type="button"
+          class="btn-quitar-foto"
+          (click)="quitarFoto($event)"
+          aria-label="Quitar foto">
+          <ion-icon name="close-circle"></ion-icon>
+        </button>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Título -->
+  <div class="seccion-bloque">
+    <span class="label-seccion">Título de la prenda *</span>
+    <div class="input-box">
+      <ion-input
+        placeholder="Ej. Camiseta vintage Selección Española"
+        [(ngModel)]="titulo">
+      </ion-input>
+    </div>
+  </div>
+
+  <!-- Categoría -->
+  <div class="seccion-bloque">
+    <span class="label-seccion">Categoría *</span>
+    <div class="chips-wrap">
+      <button
+        type="button"
+        class="chip-opcion"
+        *ngFor="let cat of categorias"
+        [class.activo]="categoria === cat"
+        (click)="categoria = cat">
+        {{ cat }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Talla -->
+  <div class="seccion-bloque">
+    <span class="label-seccion">Talla *</span>
+    <div class="chips-wrap">
+      <button
+        type="button"
+        class="chip-opcion chip-talla"
+        *ngFor="let t of tallas"
+        [class.activo]="talla === t"
+        (click)="talla = t">
+        {{ t }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Estado -->
+  <div class="seccion-bloque">
+    <span class="label-seccion">Estado de conservación *</span>
+    <div class="chips-wrap">
+      <button
+        type="button"
+        class="chip-opcion"
+        *ngFor="let est of estados"
+        [class.activo]="estado === est"
+        (click)="estado = est">
+        {{ est }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Descripción -->
+  <div class="seccion-bloque">
+    <span class="label-seccion">Descripción (opcional)</span>
+    <div class="input-box">
+      <ion-textarea
+        rows="3"
+        placeholder="Describe el tejido, medidas, detalles o qué buscas a cambio..."
+        [(ngModel)]="descripcion">
+      </ion-textarea>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <div class="footer-submit">
+    <button
+      type="button"
+      class="btn-publicar"
+      [disabled]="!formularioValido"
+      (click)="publicarPrenda()">
+      Subir prenda al armario
+    </button>
+  </div>
+</ion-footer>

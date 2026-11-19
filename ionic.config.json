@@ -1,0 +1,7 @@
+{
+  "name": "SwapCloset",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

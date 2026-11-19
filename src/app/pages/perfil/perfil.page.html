@@ -1,0 +1,160 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Mi perfil</ion-title>
+    <button
+      type="button"
+      slot="end"
+      class="btn-header-icon"
+      routerLink="/tabs/editar-perfil"
+      aria-label="Editar perfil">
+      <ion-icon name="create-outline"></ion-icon>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="perfil-card">
+    <div class="perfil-top">
+      <div class="avatar-ring">
+        <img [src]="usuario.avatar" [alt]="usuario.nombre" />
+      </div>
+
+      <div class="perfil-identidad">
+        <h2>{{ usuario.nombre }}</h2>
+        <p class="ubicacion">
+          <ion-icon name="location-outline"></ion-icon>
+          {{ usuario.ciudad }}
+        </p>
+        <span class="badge-miembro">Miembro verificado</span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <strong>{{ misPrendas.length }}</strong>
+        <span>Prendas</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <strong>{{ usuario.intercambios }}</strong>
+        <span>Intercambios</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <strong class="rating-val">
+          <ion-icon name="star"></ion-icon>
+          {{ usuario.valoracion }}
+        </strong>
+        <span>Valoración</span>
+      </div>
+    </div>
+
+    <div class="perfil-acciones">
+      <button
+        type="button"
+        class="btn-editar"
+        routerLink="/tabs/editar-perfil">
+        <ion-icon name="create-outline"></ion-icon>
+        Editar perfil
+      </button>
+      <button
+        type="button"
+        class="btn-compartir"
+        (click)="compartirPerfil()"
+        aria-label="Compartir perfil">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="preferencias-bloque">
+    <div class="pref-grupo">
+      <span class="pref-titulo">Estilos favoritos</span>
+      <div class="chips-row">
+        @for (est of listaEstilos; track est) {
+          <span class="chip-estilo">{{ est }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="pref-grupo">
+      <span class="pref-titulo">Mis tallas</span>
+      <div class="chips-row">
+        @for (t of listaTallas; track t) {
+          <span class="chip-talla">{{ t }}</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs-perfil">
+    <button
+      type="button"
+      class="tab-btn"
+      [class.activo]="tabActiva === 'armario'"
+      (click)="tabActiva = 'armario'">
+      Mi armario ({{ misPrendas.length }})
+    </button>
+    <button
+      type="button"
+      class="tab-btn"
+      [class.activo]="tabActiva === 'valoraciones'"
+      (click)="tabActiva = 'valoraciones'">
+      Valoraciones ({{ resenas.length }})
+    </button>
+  </div>
+
+  @if (tabActiva === 'armario') {
+    <div>
+      <div class="armario-grid">
+        <div class="add-prenda-card" routerLink="/tabs/publicar">
+          <div class="add-circle">
+            <ion-icon name="add-outline"></ion-icon>
+          </div>
+          <span>Subir prenda</span>
+        </div>
+
+        @for (prenda of misPrendas; track prenda.id) {
+          <div class="prenda-card">
+            <div class="img-box">
+              <img [src]="prenda.imagen" [alt]="prenda.titulo" />
+            </div>
+            <div class="card-texto">
+              <h3>{{ prenda.titulo }}</h3>
+              <p>Talla {{ prenda.talla }} · {{ prenda.estado }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (tabActiva === 'valoraciones') {
+    <div class="resenas-lista">
+      @for (item of resenas; track item.autor) {
+        <div class="resena-card">
+          <div class="resena-header">
+            <img [src]="item.avatar" [alt]="item.autor" class="resena-avatar" />
+            <div class="resena-meta">
+              <h5>{{ item.autor }}</h5>
+              <span>{{ item.fecha }}</span>
+            </div>
+            <div class="resena-stars">
+              <ion-icon name="star"></ion-icon>
+              {{ item.puntuacion }}
+            </div>
+          </div>
+          <p class="resena-texto">{{ item.comentario }}</p>
+        </div>
+      }
+    </div>
+  }
+
+  <ion-toast
+    [isOpen]="toastAbierto"
+    message="Enlace de tu armario copiado al portapapeles"
+    [duration]="2000"
+    position="bottom"
+    (didDismiss)="toastAbierto = false">
+  </ion-toast>
+</ion-content>

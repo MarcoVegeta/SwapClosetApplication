@@ -1,0 +1,136 @@
+ion-toolbar {
+  --background: #ffffff;
+  --color: #1a1a1a;
+
+  ion-title {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  ion-back-button,
+  ion-button {
+    --color: #1a1a1a;
+  }
+}
+
+ion-content {
+  --background: #ffffff;
+
+  label {
+    display: block;
+    margin: 18px 0 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+
+  input:not([type='file']):not([type='checkbox']) {
+    display: block;
+    width: 100%;
+    height: 46px;
+    background: #f3f4f6;
+    border: 1.5px solid transparent;
+    border-radius: 12px;
+    padding: 0 14px;
+    font-size: 14.5px;
+    color: #1a1a1a;
+    outline: none;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: #6356e5;
+      background: #ffffff;
+    }
+  }
+
+  label + div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    > span,
+    > button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 15px;
+      border-radius: 20px;
+      border: none;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+
+      &.activo,
+      &.activa,
+      &.active,
+      &.selected,
+      &.seleccionado,
+      &.seleccionada {
+        background: #eeecfc;
+        color: #6356e5;
+      }
+    }
+  }
+}
+
+.foto-section,
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 12px 0 24px;
+
+  .avatar-circle,
+  .avatar-placeholder,
+  .avatar-wrapper {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    ion-icon {
+      font-size: 28px;
+      color: #6b7280;
+    }
+  }
+
+  .cambiar-foto,
+  .btn-cambiar-foto {
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+    color: #6356e5;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
+
+.btn-guardar {
+  width: 100%;
+  height: 50px;
+  margin-top: 28px;
+  border: none;
+  border-radius: 25px;
+  background: #6356e5;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+}
