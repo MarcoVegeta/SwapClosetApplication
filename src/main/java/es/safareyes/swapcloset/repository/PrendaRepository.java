@@ -57,4 +57,7 @@ public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
     long contarTituloEnPerfilExcepto(@Param("idPerfil") Integer idPerfil,
                                      @Param("titulo") String titulo,
                                      @Param("idPrenda") Integer idPrenda);
+
+    @Query("SELECT COUNT(p) FROM Prenda p WHERE p.categoria.id_categoria = :idCategoria")
+    long contarPorCategoria(@Param("idCategoria") Integer idCategoria);
 }

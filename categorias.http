@@ -1,0 +1,26 @@
+### Listar (200)
+GET http://localhost:8080/api/v1/categorias
+
+### Crear (201)
+POST http://localhost:8080/api/v1/categorias
+Content-Type: application/json
+
+{ "nombre": "Vestidos" }
+
+### Repetida (409)
+POST http://localhost:8080/api/v1/categorias
+Content-Type: application/json
+
+{ "nombre": "vestidos" }
+
+### Nombre vacío (400)
+POST http://localhost:8080/api/v1/categorias
+Content-Type: application/json
+
+{ "nombre": "" }
+
+### No existe (404)
+GET http://localhost:8080/api/v1/categorias/999
+
+### Eliminar una con prendas (409)
+DELETE http://localhost:8080/api/v1/categorias/1
