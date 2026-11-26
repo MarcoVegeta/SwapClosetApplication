@@ -1,23 +1,19 @@
-package es.safareyes.swapcloset.service;
+package es.safareyes.swapcloset.service.impl;
 
 import es.safareyes.swapcloset.dto.request.PrendaRequest;
 import es.safareyes.swapcloset.dto.response.PaginaResponse;
 import es.safareyes.swapcloset.dto.response.PrendaResponse;
-
-import java.awt.print.Pageable;
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface PrendaService {
 
-    List<PrendaResponse> listar(String titulo);
+    PaginaResponse<PrendaResponse> listar(String titulo, Pageable pageable);
 
     PrendaResponse buscarPorId(Integer id);
 
     PrendaResponse crear(PrendaRequest peticion);
 
     PrendaResponse actualizar(Integer id, PrendaRequest peticion);
-
-    PaginaResponse<PrendaResponse> listar(String titulo, Pageable pageable);
 
     void eliminar(Integer id);
 }

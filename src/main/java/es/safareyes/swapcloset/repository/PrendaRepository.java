@@ -1,6 +1,8 @@
 package es.safareyes.swapcloset.repository;
 
 import es.safareyes.swapcloset.modelo.Prenda;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,14 +10,18 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
+
+    // Derivadas
     List<Prenda> findByDisponibilidadTrue();
 
     List<Prenda> findByMarca(String marca);
 
-    Page<Prenda> findByTituloContainingIgnoreCase(String texto, Pageable pageable);
-
     List<Prenda> findByTituloContainingIgnoreCase(String texto);
 
+    // Derivada paginada
+    Page<Prenda> findByTituloContainingIgnoreCase(String texto, Pageable pageable);
+
+    // JPQL con JOIN
     @Query("""
             SELECT p FROM Prenda p
             JOIN p.categoria c
@@ -23,6 +29,7 @@ public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
             """)
     List<Prenda> buscarPorCategoria(@Param("nombre") String nombre);
 
+    // SQL nativo
     @Query(value = """
             SELECT c.nombre, COUNT(p.id_prenda) AS total
             FROM categoria c
@@ -32,6 +39,7 @@ public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
             """, nativeQuery = true)
     List<Object[]> contarPrendasPorCategoria();
 
+    // Para las reglas del servicio
     @Query("""
             SELECT COUNT(p) FROM Prenda p
             WHERE p.perfil.id_perfil = :idPerfil

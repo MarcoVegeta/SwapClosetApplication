@@ -14,14 +14,13 @@ import es.safareyes.swapcloset.repository.CategoriaRepository;
 import es.safareyes.swapcloset.repository.PerfilRepository;
 import es.safareyes.swapcloset.repository.PrendaRepository;
 import es.safareyes.swapcloset.repository.SolicitudRepository;
-import es.safareyes.swapcloset.service.PrendaService;
+import es.safareyes.swapcloset.service.impl.PrendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +33,8 @@ public class PrendaServiceImpl implements PrendaService {
     private final CategoriaRepository categoriaRepository;
     private final SolicitudRepository solicitudRepository;
     private final PrendaMapper prendaMapper;
+
+    // ---------- LEER ----------
 
     @Override
     public PaginaResponse<PrendaResponse> listar(String titulo, Pageable pageable) {
@@ -49,8 +50,10 @@ public class PrendaServiceImpl implements PrendaService {
         return prendaMapper.aResponse(buscarEntidad(id));
     }
 
+    // ---------- CREAR ----------
+
     @Override
-    @Transactional   // esta sí escribe
+    @Transactional
     public PrendaResponse crear(PrendaRequest peticion) {
 
         if (prendaRepository.contarTituloEnPerfil(peticion.idPerfil(), peticion.titulo()) > 0) {
@@ -76,6 +79,8 @@ public class PrendaServiceImpl implements PrendaService {
         return prendaMapper.aResponse(guardada);
     }
 
+    // ---------- ACTUALIZAR ----------
+
     @Override
     @Transactional
     public PrendaResponse actualizar(Integer id, PrendaRequest peticion) {
@@ -97,6 +102,8 @@ public class PrendaServiceImpl implements PrendaService {
         return prendaMapper.aResponse(prenda);
     }
 
+    // ---------- ELIMINAR ----------
+
     @Override
     @Transactional
     public void eliminar(Integer id) {
@@ -111,6 +118,8 @@ public class PrendaServiceImpl implements PrendaService {
         prendaRepository.delete(prenda);
         log.info("Prenda eliminada: id={}", id);
     }
+
+    // ---------- AUXILIARES ----------
 
     private Prenda buscarEntidad(Integer id) {
         return prendaRepository.findById(id)

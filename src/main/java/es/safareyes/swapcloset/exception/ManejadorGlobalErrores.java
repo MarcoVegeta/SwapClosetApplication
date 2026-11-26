@@ -31,13 +31,13 @@ public class ManejadorGlobalErrores {
         return construir(HttpStatus.CONFLICT, "Conflicto con los datos existentes", e.getMessage());
     }
 
-    // 422: una regla del cliente lo impide
+    // 422: una regla de negocio lo impide
     @ExceptionHandler(ReglaNegocioException.class)
     public ProblemDetail reglaNegocio(ReglaNegocioException e) {
-        return construir(HttpStatus.UNPROCESSABLE_ENTITY, "Regla de negocio incumplida", e.getMessage());
+        return construir(HttpStatus.UNPROCESSABLE_CONTENT, "Regla de negocio incumplida", e.getMessage());
     }
 
-    // 400: falla una validación del DTO (@NotBlank, @Size...), campo a campo
+    // 400: falla una validación del DTO, campo a campo
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail validacion(MethodArgumentNotValidException e) {
         Map<String, String> errores = new LinkedHashMap<>();
@@ -72,18 +72,17 @@ public class ManejadorGlobalErrores {
                 "La operación viola una restricción de la base de datos");
     }
 
-    // 500: la red de seguridad, para cualquier cosa que no hayamos previsto
+    // 500: red de seguridad
     @ExceptionHandler(Exception.class)
     public ProblemDetail errorInesperado(Exception e) {
-        // Errores propios de Spring (ruta que no existe, método no permitido...)
-        // ya traen su código correcto: los dejamos pasar tal cual
+        // Los errores propios de Spring (ruta inexistente, método no permitido...) ya traen su código
         if (e instanceof ErrorResponse errorSpring) {
             return errorSpring.getBody();
         }
 
-        log.error("Error no controlado", e);   // la traza, al log
+        log.error("Error no controlado", e);
         return construir(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno",
-                "Ha ocurrido un error inesperado");   // al cliente, un mensaje neutro
+                "Ha ocurrido un error inesperado");
     }
 
     private ProblemDetail construir(HttpStatus estado, String titulo, String detalle) {
