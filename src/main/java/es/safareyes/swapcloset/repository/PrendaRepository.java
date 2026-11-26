@@ -29,4 +29,22 @@ public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
             ORDER BY total DESC
             """, nativeQuery = true)
     List<Object[]> contarPrendasPorCategoria();
+
+    @Query("""
+            SELECT COUNT(p) FROM Prenda p
+            WHERE p.perfil.id_perfil = :idPerfil
+              AND LOWER(p.titulo) = LOWER(:titulo)
+            """)
+    long contarTituloEnPerfil(@Param("idPerfil") Integer idPerfil,
+                              @Param("titulo") String titulo);
+
+    @Query("""
+            SELECT COUNT(p) FROM Prenda p
+            WHERE p.perfil.id_perfil = :idPerfil
+              AND LOWER(p.titulo) = LOWER(:titulo)
+              AND p.id_prenda <> :idPrenda
+            """)
+    long contarTituloEnPerfilExcepto(@Param("idPerfil") Integer idPerfil,
+                                     @Param("titulo") String titulo,
+                                     @Param("idPrenda") Integer idPrenda);
 }

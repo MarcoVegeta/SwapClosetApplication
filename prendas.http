@@ -1,0 +1,88 @@
+### 1. Listar todas
+GET http://localhost:8080/api/v1/prendas
+
+### 2. Una prenda
+GET http://localhost:8080/api/v1/prendas/1
+
+### 3. Crear una prenda (debe dar 201)
+POST http://localhost:8080/api/v1/prendas
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 1,
+  "titulo": "Camisa de lino",
+  "descripcion": "Casi sin uso",
+  "marca": "Mango",
+  "talla": "L",
+  "permitePrestamo": true,
+  "permiteIntercambio": false
+}
+
+### 4. Modificar la prenda 1 (debe dar 200)
+PUT http://localhost:8080/api/v1/prendas/1
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 1,
+  "titulo": "Camiseta blanca de algodón",
+  "descripcion": "Algodón, poco uso",
+  "marca": "Zara",
+  "talla": "M",
+  "permitePrestamo": true,
+  "permiteIntercambio": true
+}
+
+### 5. Eliminar una prenda (debe dar 204). Cambia el 3 por el id que te salió en el punto 3
+DELETE http://localhost:8080/api/v1/prendas/3
+
+### ---------- Pruebas de errores ----------
+
+### 6. Título vacío (400, con el campo que falla)
+POST http://localhost:8080/api/v1/prendas
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 1,
+  "titulo": "",
+  "permitePrestamo": true,
+  "permiteIntercambio": true
+}
+
+### 7. Categoría que no existe (404)
+POST http://localhost:8080/api/v1/prendas
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 999,
+  "titulo": "Prenda rara",
+  "permitePrestamo": true,
+  "permiteIntercambio": true
+}
+
+### 8. Título repetido en el mismo perfil (409)
+POST http://localhost:8080/api/v1/prendas
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 1,
+  "titulo": "Camiseta blanca",
+  "permitePrestamo": true,
+  "permiteIntercambio": true
+}
+
+### 9. No permite ni préstamo ni intercambio (422)
+POST http://localhost:8080/api/v1/prendas
+Content-Type: application/json
+
+{
+  "idPerfil": 1,
+  "idCategoria": 1,
+  "titulo": "Prenda sin modalidad",
+  "permitePrestamo": false,
+  "permiteIntercambio": false
+}
