@@ -1,6 +1,7 @@
 package es.safareyes.swapcloset.service.impl;
 
 import es.safareyes.swapcloset.dto.request.PrendaRequest;
+import es.safareyes.swapcloset.dto.response.PaginaResponse;
 import es.safareyes.swapcloset.dto.response.PrendaResponse;
 import es.safareyes.swapcloset.exception.ConflictoException;
 import es.safareyes.swapcloset.exception.RecursoNoEncontradoException;
@@ -16,6 +17,7 @@ import es.safareyes.swapcloset.repository.SolicitudRepository;
 import es.safareyes.swapcloset.service.PrendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,12 +36,12 @@ public class PrendaServiceImpl implements PrendaService {
     private final PrendaMapper prendaMapper;
 
     @Override
-    public List<PrendaResponse> listar(String titulo) {
-        List<Prenda> prendas = (titulo == null || titulo.isBlank())
-                ? prendaRepository.findAll()
-                : prendaRepository.findByTituloContainingIgnoreCase(titulo);
+    public PaginaResponse<PrendaResponse> listar(String titulo, Pageable pageable) {
+        Page<Prenda> pagina = (titulo == null || titulo.isBlank())
+                ? prendaRepository.findAll(pageable)
+                : prendaRepository.findByTituloContainingIgnoreCase(titulo, pageable);
 
-        return prendaMapper.aResponseList(prendas);
+        return PaginaResponse.de(pagina.map(prendaMapper::aResponse));
     }
 
     @Override

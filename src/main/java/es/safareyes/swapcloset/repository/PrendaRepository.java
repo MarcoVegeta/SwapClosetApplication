@@ -12,6 +12,8 @@ public interface PrendaRepository extends JpaRepository<Prenda, Integer> {
 
     List<Prenda> findByMarca(String marca);
 
+    Page<Prenda> findByTituloContainingIgnoreCase(String texto, Pageable pageable);
+
     List<Prenda> findByTituloContainingIgnoreCase(String texto);
 
     @Query("""
